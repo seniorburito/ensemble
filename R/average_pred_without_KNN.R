@@ -11,7 +11,13 @@
 #' @return A vector of predictions
 #' @export
 
-average_pred_without_KNN <- function(X_train, y_train, X_test){
+average_pred_without_KNN <- function(X_train, y_train, X_test, rfntree, rfmtry){
+  if(missing(rfntree)){
+    rfntree = 100
+  }
+  if(missing(rfmtry)){
+    rfmtry = 6
+  }
   # Creating ridge and lasso sets
   X_train_glmnet <- model.matrix(~.-1, data=X_train)
   X_test_glmnet <- model.matrix(~.-1, data=X_test)
@@ -19,7 +25,7 @@ average_pred_without_KNN <- function(X_train, y_train, X_test){
   fit_lm <- glmnet(X_train_glmnet, y_train, alpha=0, lambda=c(0))
   pred_lm <- predict(fit_lm, X_test_glmnet)[,1]
   # RF
-  fit_rf <- randomForest(x=X_train, y=y_train, ntree=100)
+  fit_rf <- randomForest(x=X_train, y=y_train, ntree=rfntree, mtry = rfmtry)
   pred_rf <- predict(fit_rf, X_test)
   # Ridge
   fit_ridge <- cv.glmnet(X_train_glmnet, y_train, alpha=0)
