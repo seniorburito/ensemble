@@ -11,7 +11,7 @@
 #' to ensure that every input row gets predicted at least a few times.
 #' @return A vector of predictions
 #' @export
-average_pred_without_KNN <- function(X_train, y_train, X_test, rfntree, KNNk, rfmtry, doKNN){
+average_pred <- function(X_train, y_train, X_test, rfntree, KNNk, rfmtry, doKNN){
   if(missing(rfntree)){
     rfntree = 100
   }
