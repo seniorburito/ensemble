@@ -7,9 +7,11 @@
 #' @param X_train training predictor vector
 #' @param y_train training response vector
 #' @param X_test predictor vector
+#' @param rfntree number of trees to grow. This should not be set to too small a number,
+#' to ensure that every input row gets predicted at least a few times.
 #' @return A vector of predictions
 #' @export
-average_pred_without_KNN <- function(X_train, y_train, X_test, rfntree, KNNk, rfmtry){
+average_pred_without_KNN <- function(X_train, y_train, X_test, rfntree, KNNk, rfmtry, doKNN){
   if(missing(rfntree)){
     rfntree = 100
   }
@@ -18,6 +20,9 @@ average_pred_without_KNN <- function(X_train, y_train, X_test, rfntree, KNNk, rf
   }
   if(missing(rfmtry)){
     rfmtry = 6
+  }
+  if(missing(doKNN)){
+    doKNN = TRUE
   }
   # Creating ridge and lasso sets
   X_train_glmnet <- model.matrix(~.-1, data=X_train)
@@ -37,6 +42,13 @@ average_pred_without_KNN <- function(X_train, y_train, X_test, rfntree, KNNk, rf
   fit_lasso <- cv.glmnet(X_train_glmnet, y_train, alpha=1)
   pred_lasso <- predict(fit_lasso, X_test_glmnet, s='lambda.min')[,1]
   # Computing average
-  avg_preds <- rowMeans(matrix(c(pred_lm, pred_knn, pred_rf, pred_ridge, pred_lasso),ncol=5))
-  return(avg_preds)
+  if(doKNN){
+    avg_preds <- rowMeans(matrix(c(pred_lm, pred_knn, pred_rf, pred_ridge, pred_lasso),ncol=5))
+    return(avg_preds)
+  }
+  else{
+    avg_preds <- rowMeans(matrix(c(pred_lm, pred_rf, pred_ridge, pred_lasso),ncol=4))
+    return(avg_preds)
+  }
+
 }
