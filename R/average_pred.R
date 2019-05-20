@@ -7,8 +7,7 @@
 #' @param X_train training predictor vector
 #' @param y_train training response vector
 #' @param X_test predictor vector
-#' @param rfntree number of trees to grow. This should not be set to too small a number,
-#' to ensure that every input row gets predicted at least a few times.
+#' @param rfntree number of trees to grow. This should not be set to too small a number
 #' @return A vector of predictions
 #' @export
 average_pred <- function(X_train, y_train, X_test, rfntree, KNNk, rfmtry, doKNN){

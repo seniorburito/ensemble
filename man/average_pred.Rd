@@ -13,8 +13,7 @@ average_pred(X_train, y_train, X_test, rfntree, KNNk, rfmtry, doKNN)
 
 \item{X_test}{predictor vector}
 
-\item{rfntree}{number of trees to grow. This should not be set to too small a number,
-to ensure that every input row gets predicted at least a few times.}
+\item{rfntree}{number of trees to grow. This should not be set to too small a number}
 }
 \value{
 A vector of predictions
