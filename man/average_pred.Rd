@@ -4,7 +4,7 @@
 \alias{average_pred}
 \title{Ensemble of regression models}
 \usage{
-average_pred(X_train, y_train, X_test, rfntree, KNNk, rfmtry, doKNN)
+average_pred(X_train, y_train, X_test)
 }
 \arguments{
 \item{X_train}{training predictor vector}
